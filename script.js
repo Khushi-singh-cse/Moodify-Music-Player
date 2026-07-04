@@ -1,3 +1,13 @@
+// =======================================
+// MOODIFY MUSIC PLAYER
+// PART 1
+// =======================================
+
+
+// ==============================
+// PLAYLIST DATA
+// ==============================
+
 const playlists = {
 
     happy: [
@@ -90,26 +100,10 @@ const playlists = {
 
 };
 
-// ==========================
-// PLAYLIST IMAGES
-// ==========================
 
-const playlistImages = {
-
-    happy: "photo/sunshine.avif",
-
-    motivation: "photo/hard work.jpg",
-
-    relax: "photo/ocean.jpg",
-
-    sad: "photo/rain.avif"
-
-};
-
-
-// ==========================
+// ==============================
 // ELEMENTS
-// ==========================
+// ==============================
 
 const audio = document.getElementById("audio");
 
@@ -134,10 +128,16 @@ const songList = document.getElementById("songList");
 const playlistButtons =
 document.querySelectorAll(".playlist-btn");
 
+const menuBtn =
+document.getElementById("menuBtn");
 
-// ==========================
+const sidebar =
+document.querySelector(".sidebar");
+
+
+// ==============================
 // VARIABLES
-// ==========================
+// ==============================
 
 let currentPlaylist = "happy";
 
@@ -146,14 +146,14 @@ let currentSong = 0;
 let isPlaying = false;
 
 
-// ==========================
+// ==============================
 // LOAD SONG
-// ==========================
-
+// ==============================
 
 function loadSong(){
 
-    const song = playlists[currentPlaylist][currentSong];
+    const song =
+    playlists[currentPlaylist][currentSong];
 
     audio.src = song.file;
 
@@ -169,9 +169,9 @@ function loadSong(){
 }
 
 
-// ==========================
+// ==============================
 // LOAD PLAYLIST
-// ==========================
+// ==============================
 
 function loadPlaylist(){
 
@@ -179,11 +179,12 @@ function loadPlaylist(){
 
     playlists[currentPlaylist].forEach((song,index)=>{
 
-        const card = document.createElement("div");
+        const card =
+        document.createElement("div");
 
         card.className = "song-card";
 
-        if(index===currentSong){
+        if(index === currentSong){
 
             card.classList.add("active");
 
@@ -191,7 +192,7 @@ function loadPlaylist(){
 
         card.innerHTML = `
 
-            <img src="${song.image}" class="song-image">
+            <img src="${song.image}" alt="${song.title}">
 
             <div class="song-info">
 
@@ -203,7 +204,7 @@ function loadPlaylist(){
 
         `;
 
-        card.onclick = ()=>{
+        card.addEventListener("click",()=>{
 
             currentSong = index;
 
@@ -213,7 +214,7 @@ function loadPlaylist(){
 
             playSong();
 
-        };
+        });
 
         songList.appendChild(card);
 
@@ -221,17 +222,24 @@ function loadPlaylist(){
 
 }
 
-// ==========================
+
+// ==============================
 // INITIAL LOAD
-// ==========================
+// ==============================
 
 loadSong();
 
 loadPlaylist();
 
-// ==========================
+// =======================================
+// PART 2
+// PLAYER CONTROLS
+// =======================================
+
+
+// ==============================
 // PLAY SONG
-// ==========================
+// ==============================
 
 function playSong(){
 
@@ -242,13 +250,12 @@ function playSong(){
     playBtn.innerHTML =
     '<i class="fa-solid fa-pause"></i>';
 
-    cover.classList.add("playing");
-
 }
 
-// ==========================
+
+// ==============================
 // PAUSE SONG
-// ==========================
+// ==============================
 
 function pauseSong(){
 
@@ -259,13 +266,12 @@ function pauseSong(){
     playBtn.innerHTML =
     '<i class="fa-solid fa-play"></i>';
 
-    cover.classList.remove("playing");
-
 }
 
-// ==========================
-// PLAY / PAUSE BUTTON
-// ==========================
+
+// ==============================
+// PLAY / PAUSE
+// ==============================
 
 playBtn.addEventListener("click",()=>{
 
@@ -283,9 +289,10 @@ playBtn.addEventListener("click",()=>{
 
 });
 
-// ==========================
+
+// ==============================
 // NEXT SONG
-// ==========================
+// ==============================
 
 nextBtn.addEventListener("click",()=>{
 
@@ -305,9 +312,10 @@ nextBtn.addEventListener("click",()=>{
 
 });
 
-// ==========================
+
+// ==============================
 // PREVIOUS SONG
-// ==========================
+// ==============================
 
 prevBtn.addEventListener("click",()=>{
 
@@ -316,7 +324,7 @@ prevBtn.addEventListener("click",()=>{
     if(currentSong < 0){
 
         currentSong =
-        playlists[currentPlaylist].length - 1;
+        playlists[currentPlaylist].length-1;
 
     }
 
@@ -328,35 +336,38 @@ prevBtn.addEventListener("click",()=>{
 
 });
 
-// ==========================
+
+// ==============================
 // PROGRESS BAR
-// ==========================
+// ==============================
 
 audio.addEventListener("timeupdate",()=>{
 
     if(audio.duration){
 
         progress.value =
-        (audio.currentTime / audio.duration) * 100;
+        (audio.currentTime/audio.duration)*100;
 
     }
 
 });
+
 
 progress.addEventListener("input",()=>{
 
     if(audio.duration){
 
         audio.currentTime =
-        (progress.value / 100) * audio.duration;
+        (progress.value/100)*audio.duration;
 
     }
 
 });
 
-// ==========================
+
+// ==============================
 // VOLUME
-// ==========================
+// ==============================
 
 volume.addEventListener("input",()=>{
 
@@ -364,9 +375,10 @@ volume.addEventListener("input",()=>{
 
 });
 
-// ==========================
+
+// ==============================
 // PLAYLIST SWITCHING
-// ==========================
+// ==============================
 
 playlistButtons.forEach(button=>{
 
@@ -391,15 +403,64 @@ playlistButtons.forEach(button=>{
 
         pauseSong();
 
+        // Close mobile sidebar
+        if(window.innerWidth<=768){
+
+            sidebar.classList.remove("show");
+
+        }
+
     });
 
 });
 
-// ==========================
-// AUTO NEXT SONG
-// ==========================
 
-audio.addEventListener("ended", () => {
+// ==============================
+// HAMBURGER MENU
+// ==============================
+
+menuBtn.addEventListener("click",()=>{
+
+    sidebar.classList.toggle("show");
+
+});
+
+
+// ==============================
+// CLOSE MENU IF CLICK OUTSIDE
+// ==============================
+
+document.addEventListener("click",(e)=>{
+
+    if(window.innerWidth>768) return;
+
+    if(
+
+        !sidebar.contains(e.target)
+
+        &&
+
+        !menuBtn.contains(e.target)
+
+    ){
+
+        sidebar.classList.remove("show");
+
+    }
+
+});
+
+// =======================================
+// PART 3
+// EXTRA FEATURES
+// =======================================
+
+
+// ==============================
+// AUTO NEXT SONG
+// ==============================
+
+audio.addEventListener("ended",()=>{
 
     currentSong++;
 
@@ -418,24 +479,21 @@ audio.addEventListener("ended", () => {
 });
 
 
-// ==========================
-// CURRENT TIME & DURATION
-// ==========================
-
-
-
+// ==============================
+// FORMAT TIME
+// ==============================
 
 function formatTime(time){
 
     if(isNaN(time)) return "0:00";
 
-    let minutes = Math.floor(time/60);
+    const minutes = Math.floor(time/60);
 
     let seconds = Math.floor(time%60);
 
     if(seconds<10){
 
-        seconds="0"+seconds;
+        seconds = "0"+seconds;
 
     }
 
@@ -444,80 +502,120 @@ function formatTime(time){
 }
 
 
-// ==========================
+// ==============================
 // KEYBOARD SHORTCUTS
-// ==========================
+// ==============================
 
 document.addEventListener("keydown",(e)=>{
 
-    if(e.code==="Space"){
-
-        e.preventDefault();
-
-        if(isPlaying){
-
-            pauseSong();
-
-        }
-
-        else{
-
-            playSong();
-
-        }
-
+    // Ignore shortcuts while typing
+    if(
+        e.target.tagName==="INPUT" ||
+        e.target.tagName==="TEXTAREA"
+    ){
+        return;
     }
 
-    if(e.code==="ArrowRight"){
+    switch(e.code){
 
-        nextBtn.click();
+        case "Space":
 
-    }
+            e.preventDefault();
 
-    if(e.code==="ArrowLeft"){
+            if(isPlaying){
 
-        prevBtn.click();
+                pauseSong();
+
+            }
+
+            else{
+
+                playSong();
+
+            }
+
+            break;
+
+        case "ArrowRight":
+
+            nextBtn.click();
+
+            break;
+
+        case "ArrowLeft":
+
+            prevBtn.click();
+
+            break;
 
     }
 
 });
 
 
-// ==========================
-// ACTIVE SONG HIGHLIGHT
-// ==========================
+// ==============================
+// REFRESH ACTIVE SONG
+// ==============================
 
 function refreshQueue(){
 
-    document.querySelectorAll(".song-card")
+    document
+    .querySelectorAll(".song-card")
     .forEach((card,index)=>{
 
-        card.classList.remove("active");
-
-        if(index===currentSong){
-
-            card.classList.add("active");
-
-        }
+        card.classList.toggle(
+            "active",
+            index===currentSong
+        );
 
     });
 
 }
 
+audio.addEventListener("play",refreshQueue);
 
-// ==========================
-// CALL AFTER EVERY SONG
-// ==========================
+audio.addEventListener("pause",refreshQueue);
 
-audio.addEventListener("play",()=>{
+
+// ==============================
+// UPDATE QUEUE AFTER SONG CHANGE
+// ==============================
+
+audio.addEventListener("loadeddata",()=>{
 
     refreshQueue();
 
 });
 
 
-// ==========================
-// PLAYER READY
-// ==========================
+// ==============================
+// KEEP PLAY BUTTON IN SYNC
+// ==============================
 
-console.log("Moodify Loaded Successfully 🎵");
+audio.addEventListener("pause",()=>{
+
+    isPlaying = false;
+
+    playBtn.innerHTML =
+    '<i class="fa-solid fa-play"></i>';
+
+});
+
+audio.addEventListener("play",()=>{
+
+    isPlaying = true;
+
+    playBtn.innerHTML =
+    '<i class="fa-solid fa-pause"></i>';
+
+});
+
+
+// ==============================
+// PLAYER READY
+// ==============================
+
+console.clear();
+
+console.log("%cMoodify Loaded Successfully 🎵",
+"color:#1DB954;font-size:18px;font-weight:bold;");
