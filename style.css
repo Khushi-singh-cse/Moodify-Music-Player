@@ -550,3 +550,64 @@ header{
     transform:scale(1.08);
 
 }
+
+@media (max-width:768px){
+
+    .container{
+        flex-direction:column;
+        align-items:center;
+        padding:20px;
+        gap:25px;
+    }
+
+    #menuBtn{
+        display:block;
+        position:absolute;
+        left:20px;
+        top:25px;
+        z-index:1001;
+    }
+
+    header{
+        position:relative;
+        justify-content:center;
+    }
+
+    .sidebar{
+        position:fixed;
+        top:0;
+        left:-260px;
+        width:230px;
+        height:100vh;
+        background:#111827;
+        z-index:1000;
+        transition:.35s;
+        padding-top:100px;
+    }
+
+    .sidebar.show{
+        left:0;
+    }
+
+    .player{
+        width:100%;
+        max-width:420px;
+        padding:30px;
+    }
+
+    .queue{
+        width:100%;
+        max-width:420px;
+        margin-top:20px;
+    }
+
+    #cover{
+        width:200px;
+        height:200px;
+    }
+
+    #title{
+        font-size:28px;
+    }
+
+}
