@@ -618,4 +618,4 @@ audio.addEventListener("play",()=>{
 console.clear();
 
 console.log("%cMoodify Loaded Successfully 🎵",
-"color:#1DB954;font-size:18px;font-weight:bold;");
+"color:#1DB954;font-size:18px;font-weight:bold;"); 
