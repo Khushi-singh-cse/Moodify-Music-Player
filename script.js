@@ -1,6 +1,5 @@
 // =======================================
 // MOODIFY MUSIC PLAYER
-// PART 1
 // =======================================
 
 
@@ -232,7 +231,6 @@ loadSong();
 loadPlaylist();
 
 // =======================================
-// PART 2
 // PLAYER CONTROLS
 // =======================================
 
@@ -451,7 +449,6 @@ document.addEventListener("click",(e)=>{
 });
 
 // =======================================
-// PART 3
 // EXTRA FEATURES
 // =======================================
 
@@ -508,7 +505,6 @@ function formatTime(time){
 
 document.addEventListener("keydown",(e)=>{
 
-    // Ignore shortcuts while typing
     if(
         e.target.tagName==="INPUT" ||
         e.target.tagName==="TEXTAREA"
